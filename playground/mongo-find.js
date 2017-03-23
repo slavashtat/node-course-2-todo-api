@@ -28,7 +28,7 @@ MongoClient.connect("mongodb://localhost:27017/TodoApp", (err, db)=>
 */
 
 
-//db.collection("Todos").find({completed:false}).toArray().then((docs)=>
+//db.colleßction("Todos").find({completed:false}).toArray().then((docs)=>
 db.collection("Todos").find().count().then((count)=>
 
 {
