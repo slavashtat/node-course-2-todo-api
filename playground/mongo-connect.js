@@ -2,7 +2,7 @@
 //const {MongoClient} = require("mongodb"); // same as the code above
 const {MongoClient,ObjectID} = require("mongodb"); // same as the code above
 
-/* example of object ID generation
+/* `example of object ID generation
 var obj = new ObjectID();
 console.log(obj);
 */
@@ -35,12 +35,13 @@ MongoClient.connect("mongodb://localhost:27017/TodoApp", (err, db)=>
  });
 */
 /*
-db.collection("Users").insertOne({
- user: "John",
- age: 25,
- location: "London"
-},(err,result )=>
-{
+ db.collection("Users").insertOne(
+ {
+  user: "John",
+  age: 25,
+  location: "London"
+ },(err,result )=>
+ {
  if(err)
  {
   return consolue.log("Unable to insert User",err);
