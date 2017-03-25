@@ -3,6 +3,7 @@ const request = require("supertest");
 
 const {app} = require("./../server");
 const {Todo} =  require("./../models/todo");
+const {ObjectID} = require('mongodb');
 
 /*
 beforeEach((done)=>
@@ -14,9 +15,11 @@ beforeEach((done)=>
 const todos =
 [
  {
+  _id: new ObjectID(),
   text:"Play games"
  },
  {
+  _id: new ObjectID(),
   text:"Smoke"
  }
 ];
@@ -123,3 +126,40 @@ describe("Get /todos",()=>
  });
 }); //describe
 */
+
+describe("GET /todos/:id  ",()=>{
+ it("Should return todo doc",(done)=>
+ {
+  // use supertest library now
+  request(app)
+  .get(`/todos/${todos[0]._id.toHexString()}`)
+  .expect(200)
+  // custom expect call now
+  .expect((res)=>
+  {
+   expect(res.body.todo.text).toBe(todos[0].text)
+  })
+  .end(done);
+ });
+
+ it("should return 404 if todo ID is not found",(done)=>
+ {
+  var id = new ObjectID();
+  // use supertest library now
+  request(app)
+  .get(`/todos/${id.toHexString()}`)
+  .expect(404)
+  .end(done);
+ });
+ it("should return 404 if todo ID is invalid",(done)=>
+ {
+  var id = "someID1234";
+  // use supertest library now
+  request(app)
+  .get(`/todos/${id}`)
+  .expect(404)
+  .end(done);
+ });
+
+
+});
