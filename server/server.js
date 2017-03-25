@@ -8,6 +8,7 @@ const {ObjectID} = require('mongodb');
 
 
 var app = express();
+const port = process.env.PORT || 3000;
 
 // Returns middleware that only parses json. This parser accepts any Unicode
 // encoding of the body and supports automatic inflation of gzip and deflate
@@ -73,8 +74,8 @@ app.get("/todos/:id",(req,res)=>
 
 
 
-app.listen(3000, () =>{
- console.log("Started on port 3000");
+app.listen(port, () =>{
+ console.log(`Started on port ${port}`);
 });
 
 module.exports = {app};
