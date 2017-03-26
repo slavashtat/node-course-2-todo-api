@@ -1,6 +1,9 @@
+require("./config/config");
+
+const _ =require("lodash");
 var express = require("express");
 var bodyParser = require("body-parser");
-const _ =require("lodash");
+
 
 var {mongoose} =  require ("./db/mongoose");
 var {Todo} =require ("./models/todo");
@@ -9,7 +12,7 @@ const {ObjectID} = require('mongodb');
 
 
 var app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 // Returns middleware that only parses json. This parser accepts any Unicode
 // encoding of the body and supports automatic inflation of gzip and deflate
