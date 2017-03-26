@@ -163,3 +163,33 @@ describe("GET /todos/:id  ",()=>{
 
 
 });
+
+describe("Delete Todo/:id",()=>{
+ it("Should remove a todo",(done)=> {
+  console.log("===============");
+  console.log(todos[1]);
+
+  var hexId = todos[1]._id.toHexString();
+  console.log("1111");
+  request(app)
+  .delete(`/todos/${hexId}`)
+  .expect(200)
+  .expect( (res)=>{
+   console.log("3333");
+   console.log(res.body);
+   expect (res.body.todo._id).toBe(hexId);
+  })
+  .end((err,res)=>{
+   console.log("4444");
+   if(err){
+    console.log("5555");
+    return done(err);
+   }
+   // query db using findById using toNotExist assertion
+   Todo.findById(hexId).then((todo)=>{
+    expect(todo).toNotExist();
+    done();
+   }).catch((e)=>done(e));
+  })
+ });
+});
