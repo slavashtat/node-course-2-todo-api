@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+const _ =require("lodash");
 
 var {mongoose} =  require ("./db/mongoose");
 var {Todo} =require ("./models/todo");
@@ -95,6 +96,46 @@ app.delete("/todos/:id",(req,res)=>
   res.status(400).send();
  });
 });
+
+app.patch("/todos/:id",(req,res)=>{
+ // get the id
+ var id = req.params.id;
+ var body = _.pick(req.body,["text","completed"]);
+
+ if (!ObjectID.isValid(id))
+ {
+  var body = id + " invalid object id";
+  //return res.status(404).send(body);
+  return res.status(404).send();
+ }
+
+ if(_.isBoolean(body.completed)&& body.completed){
+  body.completedAt = new Date().getTime(); // number of ms since Jan 1 1970
+ }else{
+   body.completed = false;
+   body.completedAt = null;
+ }
+ console.log("1111");
+ console.log(body.completed);
+
+
+ Todo.findByIdAndUpdate(id,{$set: body},{new: true}).then((todo)=>{
+  console.log("body");
+  console.log(body);
+  console.log("todo");
+  console.log(todo);
+
+  if(!todo) {
+   return res.status(404).send();
+  }
+  res.send({todo});
+ }).catch((e)=>{
+  console.log("400");
+  console.log(e);
+  res.status(400).send();
+ })
+});
+
 
 app.listen(port, () =>{
  console.log(`Started on port ${port}`);
