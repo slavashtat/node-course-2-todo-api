@@ -1,27 +1,20 @@
-var mongoose =  require ("mongoose");
+var mongoose = require('mongoose');
 
-
- var Todo = mongoose.model("Todo",
- {
- text:
- {
- type: String,
- required: true,
- minlength:1,
- trim: true // remove spaces before and after
+var Todo = mongoose.model('Todo', {
+ text: {
+  type: String,
+  required: true,
+  minlength: 1,
+  trim: true
  },
- completed:
- {
- type: Boolean,
- default: false
+ completed: {
+  type: Boolean,
+  default: false
  },
- completedAt:
- {
- type: Number,
- default:null
+ completedAt: {
+  type: Number,
+  default: null
  }
- });
+});
 
-module.exports ={Todo};
-
-
+module.exports = {Todo};
