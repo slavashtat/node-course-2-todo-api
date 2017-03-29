@@ -115,6 +115,23 @@ app.get('/users/me', authenticate, (req, res) => {
  res.send(req.user);
 });
 
+//////////////////////
+// POST /users/login
+//////////////////////
+app.post('/users/login', (req, res) => {
+ var body = _.pick(req.body, ['email', 'password']);
+ //var user = new User(body);
+
+ // Check whether it is an existing user
+ User.findByCredentials(body.email,body.password).then((user) =>{
+  res.send(user);
+ }).catch((e) =>{
+  res.status(400).send();
+ });
+}); // POST /users/login
+
+
+
 app.listen(port, () => {
  console.log(`Started up at port ${port}`);
 });
